@@ -1,29 +1,43 @@
 import React from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import UserItem from './UserItem';
+import './UserList.css';
 
-const UserItem = ({ user, onSelectUser }) => {
-    const handleUserClick = () => {
-        onSelectUser(user);
+const UserList = ({ users, onDragEnd, onSelectUser }) => {
+    const handleDragEnd = (result) => {
+        const { destination, source } = result;
+        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
+            return;
+        }
+        onDragEnd(result);
     };
 
     return (
-        <div
-            className="UserItem"
-            onClick={handleUserClick}
-            onMouseEnter={() => console.log('Mouse enter')}
-            onMouseLeave={() => console.log('Mouse leave')}
-        >
-            {user.name}
-        </div>
-    );
-};
-
-const UserList = ({ users, onSelectUser }) => {
-    return (
-        <div>
+        <div className="UserList">
             <h2>User List</h2>
-            {users.map((user) => (
-                <UserItem key={user.id} user={user} onSelectUser={onSelectUser} />
-            ))}
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <Droppable droppableId="userList">
+                    {(provided, snapshot) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            {users.map((user, index) => (
+                                <Draggable key={user.id} draggableId={user.id.toString()} index={index}>
+                                    {(provided, snapshot) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            className={`UserItem ${snapshot.isDragging ? 'is-dragging' : ''}`}
+                                        >
+                                            <UserItem user={user} onSelectUser={onSelectUser} />
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
         </div>
     );
 };

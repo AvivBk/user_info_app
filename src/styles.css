@@ -31,20 +31,5 @@ tr:nth-child(even) td {
 tr:hover td {
     background-color: #e0e0e0;
 }
-.UserList {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-.UserItem {
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    background-color: #f2f2f2;
-}
-
-    .UserItem:hover {
-        background-color: #e0e0e0;
-    }
 

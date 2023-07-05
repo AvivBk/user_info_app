@@ -1,0 +1,16 @@
+/* UserList.css */
+.UserList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.user-item {
+    background-color: #f2f2f2;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: opacity 0.2s ease-in-out;
+}
+
+    .user-item.is-dragging {
+        opacity: 0.5;
+    }

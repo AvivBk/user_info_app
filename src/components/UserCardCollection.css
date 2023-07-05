@@ -1,0 +1,15 @@
+/* CSS for UserCardCollection */
+
+.user-card-collection {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .user-card-collection.dragging {
+        opacity: 0.5;
+    }
+
+    .user-card-collection .user-card {
+        margin-bottom: 1rem;
+    }
