@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Grid } from '@mui/material'; // Import Grid component
 import UserTable from './components/UserTable';
 import UserList from './components/UserList';
+import UserCardCollection from './components/UserCardCollection';
+
 import './App.css';
 import './styles.css';
+
 const App = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -38,10 +42,15 @@ const App = () => {
                     <UserTable users={users} />
                 )}
             </div>
-            <div className="App">
-                <h1 className="AppTitle">User List</h1> {/* Updated heading */}
-                <UserList users={users} onSelectUser={handleSelectUser} />
-            </div>
+          
+            <Grid container spacing={2}>
+                <Grid item xs={4}>
+                    <UserCardCollection users={users} />
+                </Grid>
+                <Grid item xs={8}>
+                    <UserList users={users} onSelectUser={handleSelectUser} />
+                </Grid>
+            </Grid>
         </div>
     );
 };
