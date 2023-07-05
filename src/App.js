@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import UserTable from './components/UserTable';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import './App.css';
+import './styles.css';
+
+const App = () => {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+ 
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch('http://localhost:3002/users');
+            const data = await response.json();
+            setUsers(data.users);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    
+
+    return (
+        <div className="App">
+            <div>
+                <h1 className="AppTitle">User Table</h1>
+                {loading ? (
+                    <p>Loading users...</p>
+                ) : (
+                    <UserTable users={users} />
+                )}
+            </div>
+        </div>
+    );
+};
 
 export default App;

@@ -1,0 +1,14 @@
+/* src/components/CustomTableBody.css */
+
+.CustomTableBody {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.CustomTableBodyRow:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.CustomTableBodyRow:hover {
+    background-color: #e0e0e0;
+}

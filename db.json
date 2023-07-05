@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "number": "123456789",
+      "email": "john.doe@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "number": "987654321",
+      "email": "jane.smith@example.com"
+    },
+    {
+      "id": 3,
+      "name": "User 3",
+      "number": "555555555",
+      "email": "user3@example.com"
+    },
+    {
+      "id": 4,
+      "name": "User 4",
+      "number": "666666666",
+      "email": "user4@example.com"
+    },
+    {
+      "id": 5,
+      "name": "User 5",
+      "number": "777777777",
+      "email": "user5@example.com"
+    },
+    {
+      "id": 6,
+      "name": "User 6",
+      "number": "888888888",
+      "email": "user6@example.com"
+    }
+  ]
+}
