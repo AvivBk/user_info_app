@@ -1,0 +1,22 @@
+/* ProductItem.css */
+.ProductItemCard {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.ProductItemCardImage {
+    object-fit: cover;
+}
+
+.ProductItemCardTitle {
+    margin-bottom: 10px;
+}
+
+.ProductItemCardDescription {
+    margin-bottom: 10px;
+}
+
+.ProductItemCardButton {
+    margin-top: 10px;
+}

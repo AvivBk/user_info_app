@@ -1,0 +1,19 @@
+/* Cart.css */
+.CartContainer {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.CartTitle {
+    margin-bottom: 10px;
+}
+
+.CartTotal {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+}
+
+

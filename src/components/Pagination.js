@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import './Pagination.css';
 
 const Pagination = ({ currentPage, totalPageCount, onNextPage, onPreviousPage }) => {
     return (

@@ -1,10 +1,10 @@
+// app.js
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import UserTable from './components/UserTable';
 import UserList from './components/UserList';
 import UserCardCollection from './components/UserCardCollection';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Pagination from './components/Pagination';
 import Store from './components/Store';
 import './App.css';
 import './styles.css';
@@ -13,7 +13,8 @@ const App = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userCards, setUserCards] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPageCount = 2;
 
     const fetchUsers = async () => {
         try {
@@ -36,7 +37,7 @@ const App = () => {
             const newUserCard = { id: Date.now(), ...user };
             setUserCards((prevCards) => {
                 const updatedCards = [...prevCards, newUserCard];
-                setCurrentPage(updatedCards.length - 1); // Set current page to the newly added card
+                setCurrentPage(updatedCards.length);
                 return updatedCards;
             });
         }
@@ -48,7 +49,7 @@ const App = () => {
 
     const handleDragEnd = (result) => {
         if (!result.destination) {
-            return; // Dropped outside the list
+            return;
         }
 
         const { source, destination } = result;
@@ -60,18 +61,31 @@ const App = () => {
     };
 
     const handleNextPage = () => {
-        setCurrentPage(1);
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPageCount));
     };
 
     const handlePreviousPage = () => {
-        setCurrentPage(0);
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
     };
 
     return (
         <div className="App">
-            {currentPage === 0 && (
+            <div className="Pagination">
+                {currentPage > 1 && (
+                    <Button variant="contained" color="primary" onClick={handlePreviousPage}>
+                        Previous
+                    </Button>
+                )}
+                {currentPage < totalPageCount && (
+                    <Button variant="contained" color="primary" onClick={handleNextPage}>
+                        Next
+                    </Button>
+                )}
+            </div>
+
+            {currentPage === 1 && (
                 <>
-                    <div>
+                    <div className="AppTitleWrapper">
                         <h1 className="AppTitle">User Table</h1>
                         {loading ? <p>Loading users...</p> : <UserTable users={users} />}
                     </div>
@@ -94,13 +108,7 @@ const App = () => {
                     </Grid>
                 </>
             )}
-            {currentPage === 1 && <Store />}
-            <Pagination
-                currentPage={currentPage}
-                totalPageCount={2}
-                onNextPage={handleNextPage}
-                onPreviousPage={handlePreviousPage}
-            />
+            {currentPage === 2 && <Store />}
         </div>
     );
 };

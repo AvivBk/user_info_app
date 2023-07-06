@@ -1,6 +1,8 @@
+// Cart.js
 import React from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 import CartCard from './CartCard';
+import './Cart.css';
 
 const Cart = ({ cartItems, onRemoveFromCart }) => {
     const calculateTotalPrice = () => {
@@ -13,9 +15,9 @@ const Cart = ({ cartItems, onRemoveFromCart }) => {
     };
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="CartContainer">
             <Grid item xs={12}>
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" className="CartTitle">
                     My Cart
                 </Typography>
             </Grid>
@@ -24,7 +26,7 @@ const Cart = ({ cartItems, onRemoveFromCart }) => {
                     <CartCard product={item} onRemoveFromCart={handleRemoveItem} />
                 </Grid>
             ))}
-            <Grid item xs={12}>
+            <Grid item xs={12} className="CartTotal">
                 <Typography variant="body1" color="text.secondary">
                     Total Price: ${calculateTotalPrice().toFixed(2)}
                 </Typography>
