@@ -21,7 +21,7 @@ const UserList = ({ users, onDragEnd, onSelectUser }) => {
                         <div ref={provided.innerRef} {...provided.droppableProps}>
                             {users.map((user, index) => (
                                 <Draggable key={user.id} draggableId={user.id.toString()} index={index}>
-                                    {(provided, snapshot) => (
+                                    {(provided) => (
                                         <div
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}

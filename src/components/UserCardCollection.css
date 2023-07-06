@@ -6,10 +6,10 @@
     margin-bottom: 1rem;
 }
 
-    .user-card-collection.dragging {
-        opacity: 0.5;
-    }
+.user-card-collection.dragging {
+    opacity: 0.5;
+}
 
-    .user-card-collection .user-card {
-        margin-bottom: 1rem;
-    }
+.user-card-collection.user-card {
+    margin-bottom: 1rem;
+}

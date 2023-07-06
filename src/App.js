@@ -3,15 +3,17 @@ import { Grid } from '@mui/material';
 import UserTable from './components/UserTable';
 import UserList from './components/UserList';
 import UserCardCollection from './components/UserCardCollection';
-import { DragDropContext } from 'react-beautiful-dnd'; // Import DragDropContext
-
+import { DragDropContext } from 'react-beautiful-dnd';
+import Pagination from './components/Pagination';
+import Store from './components/Store';
 import './App.css';
 import './styles.css';
 
 const App = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [cardCollection, setCardCollection] = useState([]);
+    const [userCards, setUserCards] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const fetchUsers = async () => {
         try {
@@ -31,36 +33,74 @@ const App = () => {
 
     const handleSelectUser = (user) => {
         if (!isUserInCollection(user)) {
-            const updatedCollection = [...cardCollection, user];
-            setCardCollection(updatedCollection);
+            const newUserCard = { id: Date.now(), ...user };
+            setUserCards((prevCards) => {
+                const updatedCards = [...prevCards, newUserCard];
+                setCurrentPage(updatedCards.length - 1); // Set current page to the newly added card
+                return updatedCards;
+            });
         }
     };
 
     const isUserInCollection = (user) => {
-        return cardCollection.some((collectionUser) => collectionUser.id === user.id);
+        return userCards.some((card) => card.id === user.id);
     };
 
     const handleDragEnd = (result) => {
-        // ... (unchanged code)
+        if (!result.destination) {
+            return; // Dropped outside the list
+        }
+
+        const { source, destination } = result;
+
+        if (source.droppableId === 'userList' && destination.droppableId === 'userCardCollection') {
+            const draggedUser = users[source.index];
+            handleSelectUser(draggedUser);
+        }
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(1);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage(0);
     };
 
     return (
         <div className="App">
-            <div>
-                <h1 className="AppTitle">User Table</h1>
-                {loading ? <p>Loading users...</p> : <UserTable users={users} />}
-            </div>
+            {currentPage === 0 && (
+                <>
+                    <div>
+                        <h1 className="AppTitle">User Table</h1>
+                        {loading ? <p>Loading users...</p> : <UserTable users={users} />}
+                    </div>
 
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    <UserCardCollection users={cardCollection} />
-                </Grid>
-                <Grid item xs={8}>
-                    <DragDropContext onDragEnd={handleDragEnd}> {/* Wrap UserList with DragDropContext */}
-                        <UserList users={users} onDragEnd={handleDragEnd} onSelectUser={handleSelectUser} />
-                    </DragDropContext>
-                </Grid>
-            </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <UserCardCollection
+                                users={users}
+                                userCards={userCards}
+                                currentPage={currentPage}
+                                handleNextPage={handleNextPage}
+                                handlePreviousPage={handlePreviousPage}
+                            />
+                        </Grid>
+                        <Grid item xs={8}>
+                            <DragDropContext onDragEnd={handleDragEnd}>
+                                <UserList users={users} onSelectUser={handleSelectUser} />
+                            </DragDropContext>
+                        </Grid>
+                    </Grid>
+                </>
+            )}
+            {currentPage === 1 && <Store />}
+            <Pagination
+                currentPage={currentPage}
+                totalPageCount={2}
+                onNextPage={handleNextPage}
+                onPreviousPage={handlePreviousPage}
+            />
         </div>
     );
 };

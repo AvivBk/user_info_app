@@ -3,14 +3,27 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 4px;
 }
-.user-item {
+    .UserList h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+.UserItem {
     background-color: #f2f2f2;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     transition: opacity 0.2s ease-in-out;
+    border-radius: 4px;
+    cursor: grab;
+    transition: background-color 0.2s ease-in-out;
 }
-
-    .user-item.is-dragging {
+    .UserItem:hover {
+        background-color: #e0e0e0;
+    }
+    .UserItem.is-dragging {
         opacity: 0.5;
     }
