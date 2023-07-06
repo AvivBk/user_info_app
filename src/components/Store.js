@@ -13,11 +13,19 @@ const Store = () => {
     const [cartItems, setCartItems] = useState([]);
 
     const handleAddToCart = (product) => {
-        setCartItems((prevItems) => [...prevItems, product]);
+        const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
+        if (existingItemIndex !== -1) {
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[existingItemIndex].quantity += 1;
+            setCartItems(updatedCartItems);
+        } else {
+            const newItem = { ...product, quantity: 1 };
+            setCartItems((prevItems) => [...prevItems, newItem]);
+        }
     };
 
-    const handleRemoveFromCart = (product) => {
-        setCartItems((prevItems) => prevItems.filter((item) => item.id !== product.id));
+    const handleRemoveFromCart = (updatedCartItems) => {
+        setCartItems(updatedCartItems);
     };
 
     return (

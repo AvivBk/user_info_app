@@ -3,10 +3,13 @@ import { Grid, Typography, Button } from '@mui/material';
 import CartCard from './CartCard';
 
 const Cart = ({ cartItems, onRemoveFromCart }) => {
-    const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+    const calculateTotalPrice = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
 
-    const handleRemoveFromCart = (product) => {
-        onRemoveFromCart(product);
+    const handleRemoveItem = (product) => {
+        const updatedCartItems = cartItems.filter((item) => item.id !== product.id);
+        onRemoveFromCart(updatedCartItems);
     };
 
     return (
@@ -18,12 +21,12 @@ const Cart = ({ cartItems, onRemoveFromCart }) => {
             </Grid>
             {cartItems.map((item) => (
                 <Grid item xs={12} key={item.id}>
-                    <CartCard product={item} onRemoveFromCart={handleRemoveFromCart} />
+                    <CartCard product={item} onRemoveFromCart={handleRemoveItem} />
                 </Grid>
             ))}
             <Grid item xs={12}>
                 <Typography variant="body1" color="text.secondary">
-                    Total Price: ${totalPrice}
+                    Total Price: ${calculateTotalPrice().toFixed(2)}
                 </Typography>
                 <Button variant="contained" color="primary">
                     Checkout

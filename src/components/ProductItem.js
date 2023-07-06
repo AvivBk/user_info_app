@@ -5,7 +5,11 @@ const ProductItem = ({ product, onAddToCart }) => {
     const { id, name, price, image, description } = product;
 
     const handleAddToCart = () => {
-        onAddToCart(product);
+        const existingProduct = onAddToCart(product);
+        if (existingProduct) {
+            // Update the quantity of the existing product in the cart
+            existingProduct.quantity += 1;
+        }
     };
 
     return (
