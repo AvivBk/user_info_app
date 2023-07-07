@@ -89,4 +89,4 @@ const UserCardCollection = ({ users }) => {
     );
 };
 
-export default UserCardCollection;
+export default UserCard;

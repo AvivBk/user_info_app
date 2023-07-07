@@ -14,7 +14,7 @@
     },
     {
       "id": 3,
-      "name": "User 3",
+      "name": "Mary Pop",
       "number": "555555555",
       "email": "user3@example.com"
     },
@@ -35,6 +35,22 @@
       "name": "User 6",
       "number": "888888888",
       "email": "user6@example.com"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "price": 10,
+      "image": "product1.jpg",
+      "description": "Product 1 description"
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "price": 20,
+      "image": "product2.jpg",
+      "description": "Product 2 description"
     }
   ]
 }

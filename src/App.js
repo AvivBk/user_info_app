@@ -1,4 +1,3 @@
-// app.js
 import React, { useEffect, useState } from 'react';
 import { Grid, Button } from '@mui/material';
 import UserTable from './components/UserTable';
@@ -15,10 +14,11 @@ const App = () => {
     const [userCards, setUserCards] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const totalPageCount = 2;
+    const [products, setProducts] = useState([]);
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:3002/users');
+            const response = await fetch('/users');
             const data = await response.json();
             setUsers(data.users);
             setLoading(false);
@@ -28,8 +28,22 @@ const App = () => {
         }
     };
 
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch('/api/products');
+            if (!response.ok) {
+                throw new Error(`Failed to fetch products. Server returned ${response.status}: ${response.statusText}`);
+            }
+            const data = await response.json();
+            setProducts(data.products);
+        } catch (error) {
+            console.error('Error fetching products:', error.message);
+        }
+    };
+
     useEffect(() => {
         fetchUsers();
+        fetchProducts();
     }, []);
 
     const handleSelectUser = (user) => {
@@ -108,7 +122,7 @@ const App = () => {
                     </Grid>
                 </>
             )}
-            {currentPage === 2 && <Store />}
+            {currentPage === 2 && <Store products={products} />}
         </div>
     );
 };

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './UserCardCollection.css';
 
 const UserCard = ({ user }) => (
@@ -23,55 +22,16 @@ const UserCard = ({ user }) => (
     </Card>
 );
 
-const UserCardCollection = ({ users }) => {
-    const [userCards, setUserCards] = useState([]);
-
-    const handleDragEnd = (result) => {
-        const { destination, source } = result;
-        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
-            return;
-        }
-
-        const newUserCards = Array.from(userCards);
-        const [draggedCard] = newUserCards.splice(source.index, 1);
-        newUserCards.splice(destination.index, 0, draggedCard);
-
-        setUserCards(newUserCards);
-    };
-
+const UserCardCollection = ({ users, onSelectUser }) => {
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="userCardCollection">
-                {(provided, snapshot) => (
-                    <Box className="user-card-collection" {...provided.droppableProps} ref={provided.innerRef}>
-                        <h2>User Card</h2>
-                        {userCards.length > 0 ? (
-                            userCards.map((user, index) => (
-                                <Draggable key={user.id.toString()} draggableId={user.id.toString()} index={index}>
-                                    {(provided, snapshot) => (
-                                        <div
-                                            className="user-card-draggable"
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                            style={{
-                                                ...provided.draggableProps.style,
-                                                opacity: snapshot.isDragging ? 0.5 : 1,
-                                            }}
-                                        >
-                                            <UserCard user={user} />
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))
-                        ) : (
-                            <p>No user available</p>
-                        )}
-                        {provided.placeholder}
-                    </Box>
-                )}
-            </Droppable>
-        </DragDropContext>
+        <Box className="user-card-collection">
+            <h2>User Card</h2>
+            {users.map((user) => (
+                <div key={user.id} className="user-card" onClick={() => onSelectUser(user)}>
+                    <UserCard user={user} />
+                </div>
+            ))}
+        </Box>
     );
 };
 

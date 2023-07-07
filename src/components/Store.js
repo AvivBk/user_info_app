@@ -3,14 +3,26 @@ import { Grid } from '@mui/material';
 import ProductList from './ProductList';
 import Cart from './Cart';
 
-const products = [
-    { id: 1, name: 'Product 1', price: 10, image: 'product1.jpg', description: 'Product 1 description' },
-    { id: 2, name: 'Product 2', price: 20, image: 'product2.jpg', description: 'Product 2 description' },
-    // Add more products as needed
-];
-
 const Store = () => {
     const [cartItems, setCartItems] = useState([]);
+
+    // Generate the products data
+    const products = [
+        {
+            id: 1,
+            name: 'Product 1',
+            price: 10,
+            image: 'product1.jpg',
+            description: 'Product 1 description',
+        },
+        {
+            id: 2,
+            name: 'Product 2',
+            price: 20,
+            image: 'product2.jpg',
+            description: 'Product 2 description',
+        },
+    ];
 
     const handleAddToCart = (product) => {
         const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
